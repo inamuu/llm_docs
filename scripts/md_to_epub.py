@@ -6,6 +6,7 @@ import argparse
 import datetime as dt
 import html
 import re
+import shutil
 import sys
 import uuid
 import zipfile
@@ -74,6 +75,22 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         nargs="?",
         help="Output EPUB path. Defaults to books/<input-stem>.epub",
+    )
+    parser.add_argument(
+        "--copy-markdown-to-downloads",
+        action="store_true",
+        help="Copy the source markdown file to ~/Downloads after conversion.",
+    )
+    parser.add_argument(
+        "--copy-epub-to-downloads",
+        action="store_true",
+        help="Copy the generated EPUB file to ~/Downloads after conversion.",
+    )
+    parser.add_argument(
+        "--downloads-dir",
+        type=Path,
+        default=Path.home() / "Downloads",
+        help="Destination directory used by the copy-to-downloads flags.",
     )
     return parser.parse_args()
 
@@ -385,6 +402,17 @@ def write_epub(output_path: Path, book_title: str, author: str, chapters: list[d
             )
 
 
+def copy_file_to_dir(source_path: Path, destination_dir: Path) -> Path:
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    destination_path = destination_dir / source_path.name
+
+    if source_path.resolve() == destination_path.resolve():
+        return destination_path
+
+    shutil.copy2(source_path, destination_path)
+    return destination_path
+
+
 def main() -> int:
     args = parse_args()
     input_path = args.input
@@ -398,6 +426,15 @@ def main() -> int:
         return 1
 
     print(f"created: {output_path}")
+
+    if args.copy_markdown_to_downloads:
+        copied_markdown = copy_file_to_dir(input_path, args.downloads_dir)
+        print(f"copied markdown: {copied_markdown}")
+
+    if args.copy_epub_to_downloads:
+        copied_epub = copy_file_to_dir(output_path, args.downloads_dir)
+        print(f"copied epub: {copied_epub}")
+
     return 0
 
 
