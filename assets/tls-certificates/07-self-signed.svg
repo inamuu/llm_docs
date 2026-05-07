@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">自己署名証明書が警告になる理由</title>
+  <desc id="desc">自己署名証明書が自分で自分に署名しており、公開ルートストアへつながらないためブラウザが警告する様子。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.box{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.bad{fill:#f9e8e3}.good{fill:#e5f3df}.line{stroke:#1f3a3d;stroke-width:5;fill:none}.dash{stroke-dasharray:12 10}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 28px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}.x{font:700 70px sans-serif;fill:#a94436}
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">自己署名は「自分で自分を保証」している</text>
+  <rect class="box bad" x="120" y="180" width="360" height="170"/>
+  <text class="label" x="170" y="245">自己署名証明書</text>
+  <text class="text" x="170" y="285">発行者も本人</text>
+  <path class="line dash" d="M480 265 C610 230, 680 230, 810 265"/>
+  <text class="x" x="630" y="250">×</text>
+  <rect class="box good" x="820" y="180" width="260" height="170"/>
+  <text class="label" x="870" y="245">公開ルート</text>
+  <text class="text" x="865" y="285">ストアにある信頼</text>
+  <rect class="box" x="250" y="475" width="700" height="130"/>
+  <text class="label" x="335" y="535">鎖が信頼済みルートへ届かない</text>
+  <text class="text" x="335" y="575">だからブラウザは「本物か判断できない」と表示する</text>
+</svg>

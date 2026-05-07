@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">ブラウザの証明書検証</title>
+  <desc id="desc">ブラウザが証明書を正しいと判断するために見る観点をチェックリストとして示す図。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.panel{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.check{fill:#e5f3df;stroke:#1f3a3d;stroke-width:3}.warn{fill:#fff6d8;stroke:#1f3a3d;stroke-width:3}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 26px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">ブラウザが確認する主なポイント</text>
+  <rect class="panel" x="120" y="140" width="960" height="540"/>
+  <circle class="check" cx="190" cy="215" r="24"/><text class="label" x="230" y="224">名前が合う</text><text class="text" x="480" y="224">URLのホスト名とSANが一致する</text>
+  <circle class="check" cx="190" cy="300" r="24"/><text class="label" x="230" y="309">期限内である</text><text class="text" x="480" y="309">現在時刻が有効期間に入っている</text>
+  <circle class="check" cx="190" cy="385" r="24"/><text class="label" x="230" y="394">用途が合う</text><text class="text" x="480" y="394">TLSサーバー認証に使える</text>
+  <circle class="check" cx="190" cy="470" r="24"/><text class="label" x="230" y="479">署名をたどれる</text><text class="text" x="480" y="479">中間証明書から信頼済みルートへ届く</text>
+  <circle class="warn" cx="190" cy="555" r="24"/><text class="label" x="230" y="564">失効していない</text><text class="text" x="480" y="564">OCSPやCRLなどで取り消しを確認する場合がある</text>
+  <circle class="warn" cx="190" cy="640" r="24"/><text class="label" x="230" y="649">公開ログにある</text><text class="text" x="480" y="649">CT要件を満たす必要がある環境が多い</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">証明書ストアの違い</title>
+  <desc id="desc">OS、Chrome、Firefox、企業管理の証明書ストアが一致しないことがある様子。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.box{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.os{fill:#eaf2f8}.browser{fill:#fff6d8}.enterprise{fill:#e5f3df}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 28px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">「証明書ストア」は一枚岩ではない</text>
+  <rect class="box os" x="110" y="170" width="430" height="145"/>
+  <text class="label" x="170" y="230">OSのストア</text>
+  <text class="text" x="170" y="270">Windows、macOS、Linuxなど</text>
+  <rect class="box browser" x="660" y="170" width="430" height="145"/>
+  <text class="label" x="720" y="230">ブラウザのストア</text>
+  <text class="text" x="720" y="270">ChromeやFirefoxの方針</text>
+  <rect class="box enterprise" x="110" y="420" width="430" height="145"/>
+  <text class="label" x="170" y="480">企業管理の追加CA</text>
+  <text class="text" x="170" y="520">プロキシや社内サービス向け</text>
+  <rect class="box" x="660" y="420" width="430" height="145"/>
+  <text class="label" x="720" y="480">アプリ独自の信頼</text>
+  <text class="text" x="720" y="520">Java、コンテナ、古い端末など</text>
+  <text class="text" x="230" y="660">同じURLでも、実行環境が違うと検証結果が変わることがある。</text>
+</svg>

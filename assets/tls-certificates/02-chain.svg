@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">証明書チェーン</title>
+  <desc id="desc">サーバー証明書、中間証明書、ルート証明書が署名でつながり、ルート証明書が証明書ストアで信頼される様子。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.card{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.root{fill:#e5f3df}.inter{fill:#fff6d8}.leaf{fill:#eaf2f8}.store{fill:#f1e8f7}.line{stroke:#1f3a3d;stroke-width:5;fill:none;marker-end:url(#arrow)}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 30px sans-serif;fill:#1f3a3d}.text{font:23px sans-serif;fill:#1f3a3d}.small{font:20px sans-serif;fill:#52666a}
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#1f3a3d"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">信頼は「鎖」でたどる</text>
+  <rect class="card leaf" x="80" y="165" width="300" height="135"/>
+  <text class="label" x="120" y="220">サーバー証明書</text>
+  <text class="small" x="120" y="258">example.com 用</text>
+  <rect class="card inter" x="450" y="165" width="300" height="135"/>
+  <text class="label" x="500" y="220">中間証明書</text>
+  <text class="small" x="500" y="258">CAの実務用の鍵</text>
+  <rect class="card root" x="820" y="165" width="300" height="135"/>
+  <text class="label" x="875" y="220">ルート証明書</text>
+  <text class="small" x="875" y="258">信頼の起点</text>
+  <path class="line" d="M385 232 L440 232"/>
+  <path class="line" d="M755 232 L810 232"/>
+  <text class="text" x="205" y="360">中間CAが署名</text>
+  <text class="text" x="575" y="360">ルートCAが署名</text>
+  <rect class="card store" x="275" y="475" width="650" height="150"/>
+  <text class="label" x="400" y="535">証明書ストア</text>
+  <text class="text" x="340" y="582">OSやブラウザが持つ「信頼してよいルート一覧」</text>
+  <path class="line" d="M970 310 C970 420, 820 470, 710 500"/>
+  <text class="small" x="740" y="455">ここにルートがあれば鎖が成立する</text>
+</svg>

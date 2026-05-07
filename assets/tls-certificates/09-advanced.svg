@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">玄人向けの論点</title>
+  <desc id="desc">証明書検証を、パス構築、制約、失効、透明性、鍵交換の層に分けて示す図。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.layer{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:16}.a{fill:#eaf2f8}.b{fill:#fff6d8}.c{fill:#e5f3df}.d{fill:#f1e8f7}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 26px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">玄人向けには「どの層の話か」を分ける</text>
+  <rect class="layer a" x="140" y="150" width="920" height="80"/><text class="label" x="185" y="202">TLSハンドシェイク</text><text class="text" x="520" y="202">証明書は認証、暗号通信は鍵交換後</text>
+  <rect class="layer b" x="140" y="255" width="920" height="80"/><text class="label" x="185" y="307">X.509パス検証</text><text class="text" x="520" y="307">署名、期限、名前、用途、制約</text>
+  <rect class="layer c" x="140" y="360" width="920" height="80"/><text class="label" x="185" y="412">Web PKIポリシー</text><text class="text" x="520" y="412">CA/B Forum、root program、監査</text>
+  <rect class="layer d" x="140" y="465" width="920" height="80"/><text class="label" x="185" y="517">運用と監視</text><text class="text" x="520" y="517">ACME、ローテーション、CT、失効</text>
+  <rect class="layer" x="140" y="570" width="920" height="80"/><text class="label" x="185" y="622">脅威モデル</text><text class="text" x="520" y="622">秘密鍵漏えい、誤発行、MITM、内部CA</text>
+</svg>

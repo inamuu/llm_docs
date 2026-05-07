@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">TLS接続で最初に起きること</title>
+  <desc id="desc">ブラウザとサーバーの間で、名前、証明書、鍵交換、暗号通信の順に進む流れを示す図。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.box{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.server{fill:#eaf2f8}.cert{fill:#fff6d8}.key{fill:#e5f3df}.line{stroke:#1f3a3d;stroke-width:5;fill:none;marker-end:url(#arrow)}.muted{fill:#52666a}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 30px sans-serif;fill:#1f3a3d}.text{font:24px sans-serif;fill:#1f3a3d}.small{font:21px sans-serif;fill:#52666a}
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#1f3a3d"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">TLS接続は「本人確認」から始まる</text>
+  <rect class="box" x="80" y="160" width="260" height="170"/>
+  <text class="label" x="135" y="225">ブラウザ</text>
+  <text class="small" x="118" y="270">https://example.com</text>
+  <rect class="box server" x="860" y="160" width="260" height="170"/>
+  <text class="label" x="930" y="225">サーバー</text>
+  <text class="small" x="905" y="270">example.com の応答</text>
+  <path class="line" d="M350 210 C500 170, 700 170, 850 210"/>
+  <text class="text" x="470" y="155">1. 接続したい名前を伝える</text>
+  <path class="line" d="M850 285 C700 340, 500 340, 350 285"/>
+  <text class="text" x="455" y="375">2. 証明書チェーンを返す</text>
+  <rect class="box cert" x="390" y="430" width="420" height="100"/>
+  <text class="text" x="430" y="475">3. ブラウザが証明書を検証</text>
+  <text class="small" x="430" y="508">名前・期限・署名・信頼の鎖を確認</text>
+  <path class="line" d="M600 540 L600 625"/>
+  <rect class="box key" x="300" y="625" width="600" height="80"/>
+  <text class="text" x="350" y="675">4. 安全に共通鍵を作り、以後は暗号通信</text>
+</svg>

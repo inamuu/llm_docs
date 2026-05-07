@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">mkcertの仕組み</title>
+  <desc id="desc">mkcertがローカルCAを作り、そのルートを自分の端末の証明書ストアに入れ、localhost用証明書を発行する様子。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.box{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.local{fill:#eaf2f8}.store{fill:#f1e8f7}.cert{fill:#fff6d8}.line{stroke:#1f3a3d;stroke-width:5;fill:none;marker-end:url(#arrow)}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 28px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}
+  </style>
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#1f3a3d"/></marker></defs>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">mkcertは「自分の端末だけで信頼されるCA」を作る</text>
+  <rect class="box local" x="90" y="160" width="300" height="145"/>
+  <text class="label" x="160" y="220">mkcert</text>
+  <text class="text" x="130" y="260">ローカルCAを作成</text>
+  <rect class="box store" x="455" y="160" width="300" height="145"/>
+  <text class="label" x="510" y="220">証明書ストア</text>
+  <text class="text" x="500" y="260">自分の端末へ登録</text>
+  <rect class="box cert" x="820" y="160" width="300" height="145"/>
+  <text class="label" x="875" y="220">localhost証明書</text>
+  <text class="text" x="875" y="260">そのCAで署名</text>
+  <path class="line" d="M395 232 L445 232"/>
+  <path class="line" d="M755 232 L810 232"/>
+  <rect class="box" x="205" y="455" width="790" height="140"/>
+  <text class="label" x="300" y="515">信頼される範囲は、自分がCAを入れた端末だけ</text>
+  <text class="text" x="300" y="555">他人のスマホや本番ブラウザには、そのCAが入っていない</text>
+</svg>

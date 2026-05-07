@@ -1,0 +1,11 @@
+{
+  "name": "llm_docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "send-to-kindle": "node scripts/send_to_kindle.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.54.2"
+  }
+}

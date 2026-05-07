@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">SREが見る証明書運用</title>
+  <desc id="desc">発行、配布、監視、更新、失効対応、棚卸しが証明書運用の循環であることを示す図。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.node{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:18}.line{stroke:#1f3a3d;stroke-width:5;fill:none;marker-end:url(#arrow)}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 25px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}
+  </style>
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#1f3a3d"/></marker></defs>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">SREにとって証明書は運用品目</text>
+  <rect class="node" x="455" y="130" width="290" height="85"/><text class="label" x="520" y="184">発行を自動化</text>
+  <rect class="node" x="780" y="260" width="290" height="85"/><text class="label" x="850" y="314">安全に配布</text>
+  <rect class="node" x="705" y="500" width="290" height="85"/><text class="label" x="780" y="554">期限を監視</text>
+  <rect class="node" x="205" y="500" width="290" height="85"/><text class="label" x="280" y="554">更新を検証</text>
+  <rect class="node" x="130" y="260" width="290" height="85"/><text class="label" x="205" y="314">棚卸しする</text>
+  <path class="line" d="M735 180 C830 190, 900 220, 925 250"/>
+  <path class="line" d="M925 350 C925 415, 900 455, 855 490"/>
+  <path class="line" d="M700 545 L505 545"/>
+  <path class="line" d="M345 495 C275 430, 255 390, 270 350"/>
+  <path class="line" d="M420 280 C455 220, 480 200, 455 180"/>
+  <text class="text" x="330" y="675">期限切れは障害。秘密鍵漏えいは事故。どちらも仕組みで減らす。</text>
+</svg>

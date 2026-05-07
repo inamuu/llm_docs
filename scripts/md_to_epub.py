@@ -10,6 +10,7 @@ import shutil
 import sys
 import uuid
 import zipfile
+from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -47,6 +48,21 @@ ul, ol {
 li {
   margin: 0 0 0.4em;
 }
+figure {
+  margin: 1.4em 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+figcaption {
+  color: #444;
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin-top: 0.5em;
+}
+img {
+  height: auto;
+  max-width: 100%;
+}
 .title-page {
   text-align: center;
   margin-top: 30%;
@@ -63,6 +79,13 @@ nav ol {
   margin-left: 1.2em;
 }
 """
+
+
+@dataclass(frozen=True)
+class ImageAsset:
+    source_path: Path
+    epub_href: str
+    media_type: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -99,8 +122,9 @@ def normalize_lines(text: str) -> list[str]:
     return text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
 
 
-def parse_manuscript(path: Path) -> tuple[str, str, list[dict[str, object]]]:
+def parse_manuscript(path: Path) -> tuple[str, str, list[dict[str, object]], list[ImageAsset]]:
     lines = normalize_lines(path.read_text(encoding="utf-8"))
+    image_assets: dict[Path, ImageAsset] = {}
 
     idx = 0
     while idx < len(lines) and not lines[idx].strip():
@@ -131,7 +155,7 @@ def parse_manuscript(path: Path) -> tuple[str, str, list[dict[str, object]]]:
         chapters.append(
             {
                 "title": current_title,
-                "blocks": parse_blocks(current_lines),
+                "blocks": parse_blocks(current_lines, path.parent, image_assets),
             }
         )
         current_title = None
@@ -153,10 +177,10 @@ def parse_manuscript(path: Path) -> tuple[str, str, list[dict[str, object]]]:
     if not chapters:
         raise ValueError("少なくとも1つの章が必要です。")
 
-    return book_title, author, chapters
+    return book_title, author, chapters, list(image_assets.values())
 
 
-def parse_blocks(lines: list[str]) -> list[str]:
+def parse_blocks(lines: list[str], base_dir: Path, image_assets: dict[Path, ImageAsset]) -> list[str]:
     blocks: list[str] = []
     i = 0
 
@@ -170,6 +194,21 @@ def parse_blocks(lines: list[str]) -> list[str]:
 
         if stripped.startswith("## "):
             blocks.append(f"<h2>{inline_to_html(stripped[3:].strip())}</h2>")
+            i += 1
+            continue
+
+        image_match = re.match(r"^!\[(.*?)\]\((.+?)\)$", stripped)
+        if image_match:
+            alt_text = image_match.group(1).strip()
+            image_ref = image_match.group(2).strip()
+            asset = register_image_asset(image_ref, base_dir, image_assets)
+            blocks.append(
+                "<figure>"
+                f'<img src="{html.escape(asset.epub_href, quote=True)}" '
+                f'alt="{html.escape(alt_text, quote=True)}" />'
+                f"<figcaption>{inline_to_html(alt_text)}</figcaption>"
+                "</figure>"
+            )
             i += 1
             continue
 
@@ -204,6 +243,7 @@ def parse_blocks(lines: list[str]) -> list[str]:
             if (
                 not candidate
                 or candidate.startswith("## ")
+                or re.match(r"^!\[(.*?)\]\((.+?)\)$", candidate)
                 or re.match(r"^[-*] ", candidate)
                 or re.match(r"^\d+\. ", candidate)
             ):
@@ -214,6 +254,38 @@ def parse_blocks(lines: list[str]) -> list[str]:
         blocks.append(f"<p>{inline_to_html(paragraph)}</p>")
 
     return blocks
+
+
+def register_image_asset(
+    image_ref: str, base_dir: Path, image_assets: dict[Path, ImageAsset]
+) -> ImageAsset:
+    if re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", image_ref):
+        raise ValueError("外部URLの画像はEPUBに同梱できません。ローカル画像を指定してください。")
+
+    source_path = (base_dir / image_ref).resolve()
+    if not source_path.exists():
+        raise ValueError(f"画像ファイルが見つかりません: {source_path}")
+    if source_path in image_assets:
+        return image_assets[source_path]
+
+    media_types = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".gif": "image/gif",
+        ".svg": "image/svg+xml",
+        ".webp": "image/webp",
+    }
+    suffix = source_path.suffix.lower()
+    if suffix not in media_types:
+        raise ValueError(f"対応していない画像形式です: {source_path.suffix}")
+
+    asset_index = len(image_assets) + 1
+    safe_name = re.sub(r"[^A-Za-z0-9_.-]", "_", source_path.name)
+    epub_href = f"images/image-{asset_index:02d}-{safe_name}"
+    asset = ImageAsset(source_path=source_path, epub_href=epub_href, media_type=media_types[suffix])
+    image_assets[source_path] = asset
+    return asset
 
 
 def inline_to_html(text: str) -> str:
@@ -312,7 +384,11 @@ def build_toc_ncx(
 
 
 def build_content_opf(
-    book_id: str, book_title: str, author: str, chapters: list[dict[str, object]]
+    book_id: str,
+    book_title: str,
+    author: str,
+    chapters: list[dict[str, object]],
+    image_assets: list[ImageAsset],
 ) -> str:
     modified = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     manifest_items = [
@@ -329,6 +405,12 @@ def build_content_opf(
             'media-type="application/xhtml+xml" />'
         )
         spine_refs.append(f'<itemref idref="chapter-{index}" />')
+
+    for index, asset in enumerate(image_assets, start=1):
+        manifest_items.append(
+            f'<item id="image-{index}" href="{html.escape(asset.epub_href, quote=True)}" '
+            f'media-type="{asset.media_type}" />'
+        )
 
     return XML_TEMPLATE.format(
         body=(
@@ -349,7 +431,13 @@ def build_content_opf(
     )
 
 
-def write_epub(output_path: Path, book_title: str, author: str, chapters: list[dict[str, object]]) -> None:
+def write_epub(
+    output_path: Path,
+    book_title: str,
+    author: str,
+    chapters: list[dict[str, object]],
+    image_assets: list[ImageAsset],
+) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     book_id = f"urn:uuid:{uuid.uuid4()}"
 
@@ -389,9 +477,16 @@ def write_epub(output_path: Path, book_title: str, author: str, chapters: list[d
         )
         epub.writestr(
             "OEBPS/content.opf",
-            build_content_opf(book_id, book_title, author, chapters),
+            build_content_opf(book_id, book_title, author, chapters, image_assets),
             compress_type=zipfile.ZIP_DEFLATED,
         )
+
+        for asset in image_assets:
+            epub.writestr(
+                f"OEBPS/{asset.epub_href}",
+                asset.source_path.read_bytes(),
+                compress_type=zipfile.ZIP_DEFLATED,
+            )
 
         for index, chapter in enumerate(chapters, start=1):
             body = f"<h1>{html.escape(str(chapter['title']))}</h1>{''.join(chapter['blocks'])}"
@@ -419,8 +514,8 @@ def main() -> int:
     output_path = args.output or Path("books") / f"{input_path.stem}.epub"
 
     try:
-        book_title, author, chapters = parse_manuscript(input_path)
-        write_epub(output_path, book_title, author, chapters)
+        book_title, author, chapters, image_assets = parse_manuscript(input_path)
+        write_epub(output_path, book_title, author, chapters, image_assets)
     except Exception as exc:  # noqa: BLE001
         print(f"error: {exc}", file=sys.stderr)
         return 1

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">証明書の中身</title>
+  <desc id="desc">証明書の主要フィールドとして、名前、公開鍵、有効期限、用途、発行者、署名を示す図。</desc>
+  <style>
+    .bg{fill:#f7f8f4}.paper{fill:#fff;stroke:#1f3a3d;stroke-width:4;rx:20}.row{fill:#eef4f2;stroke:#b6c8c9;stroke-width:2;rx:12}.accent{fill:#fff6d8}.title{font:700 42px sans-serif;fill:#1f3a3d}.label{font:700 25px sans-serif;fill:#1f3a3d}.text{font:22px sans-serif;fill:#52666a}
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="80" y="82">証明書は「身分証」と「公開鍵」の束</text>
+  <rect class="paper" x="180" y="135" width="840" height="560"/>
+  <rect class="row accent" x="240" y="185" width="720" height="62"/>
+  <text class="label" x="270" y="225">対象の名前</text><text class="text" x="520" y="225">example.com</text>
+  <rect class="row" x="240" y="270" width="720" height="62"/>
+  <text class="label" x="270" y="310">公開鍵</text><text class="text" x="520" y="310">この相手に暗号を送るための鍵</text>
+  <rect class="row" x="240" y="355" width="720" height="62"/>
+  <text class="label" x="270" y="395">有効期限</text><text class="text" x="520" y="395">Not Before / Not After</text>
+  <rect class="row" x="240" y="440" width="720" height="62"/>
+  <text class="label" x="270" y="480">用途</text><text class="text" x="520" y="480">TLSサーバー認証など</text>
+  <rect class="row" x="240" y="525" width="720" height="62"/>
+  <text class="label" x="270" y="565">発行者</text><text class="text" x="520" y="565">どのCAが発行したか</text>
+  <rect class="row accent" x="240" y="610" width="720" height="62"/>
+  <text class="label" x="270" y="650">署名</text><text class="text" x="520" y="650">改ざんされていないことの印</text>
+</svg>
